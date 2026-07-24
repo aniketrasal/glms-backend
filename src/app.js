@@ -13,7 +13,6 @@ import { errorHandler } from './middleware/errorHandler.js';
 import v1Router from './routes/v1/index.js';
 
 // Strip trailing slash from frontend URL and allow both with and without
-//add more thing
 const allowedOrigins = [
   config.frontendUrl.replace(/\/$/, ''),
   config.frontendUrl.replace(/\/$/, '') + '/'
