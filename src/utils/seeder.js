@@ -22,13 +22,13 @@ const seedData = async () => {
 
     const admin = new User({
       employeeId: 'EMP-1001',
-      firstName: 'Rajesh',
-      lastName: 'Kumar',
-      email: 'rajesh@company.com',
+      firstName: 'Aniket',
+      lastName: 'Rasal',
+      email: 'aniket@company.com',
       passwordHash,
       role: 'quality_admin',
       department: 'Quality',
-      badgeQrCode: 'EMP-1001-QR',
+      badgeQrCode: 'EMP-3023-QR',
       activeGaugeCount: 0,
       isRestricted: false,
       isActive: true

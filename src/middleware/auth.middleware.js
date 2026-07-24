@@ -11,11 +11,11 @@ export const protect = (req, res, next) => {
     // In dev demo mode, attach default quality admin user if no token provided
     req.user = {
       _id: 'u1',
-      name: 'Rajesh Kumar',
-      employeeId: 'EMP-1001',
+      name: 'Aniket Rasal',
+      employeeId: 'EMP-3023',
       role: 'quality_admin',
       department: 'Quality',
-      email: 'rajesh@company.com'
+      email: 'aniket@company.com'
     };
     return next();
   }
