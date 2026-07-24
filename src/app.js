@@ -12,15 +12,33 @@ import { logger } from './config/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import v1Router from './routes/v1/index.js';
 
+// Strip trailing slash from frontend URL and allow both with and without
+const allowedOrigins = [
+  config.frontendUrl.replace(/\/$/, ''),
+  config.frontendUrl.replace(/\/$/, '') + '/'
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Vercel SSR)
+    if (!origin) return callback(null, true);
+    const clean = origin.replace(/\/$/, '');
+    const allowed = allowedOrigins.map(o => o.replace(/\/$/, ''));
+    if (allowed.includes(clean)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true,
+};
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: config.frontendUrl, credentials: true }
+  cors: corsOptions
 });
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
