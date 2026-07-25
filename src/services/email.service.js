@@ -83,19 +83,23 @@ export const emailService = {
   },
 
   sendOverdueReminder: async (toEmail, name, gaugeId, gaugeName, daysOverdue) => {
-    const subject = `⚠️ UGENT GLMS: Overdue Gauge Return Reminder - ${gaugeId}`;
+    const subject = `⚠️ URGENT: Please Return Gauge ${gaugeId} Immediately — Quality Department`;
     const html = `
       <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #0f172a; color: #f1f5f9;">
-        <h2 style="color: #ef4444; text-align: center; border-bottom: 2px solid #ef4444; padding-bottom: 10px;">⚠️ OVERDUE INSTRUMENT ALERT</h2>
-        <p>Hello ${name},</p>
-        <p>Our records show that you have not returned the following measuring instrument which is now past its return due date:</p>
+        <h2 style="color: #ef4444; text-align: center; border-bottom: 2px solid #ef4444; padding-bottom: 10px;">⚠️ URGENT — GAUGE RETURN REQUIRED</h2>
+        <p>Dear ${name},</p>
+        <p>The <strong>Quality Department urgently needs this gauge</strong>. Please contact the Quality Supervisor and return the gauge to the Quality Store <strong>as soon as possible</strong>.</p>
         <div style="background-color: #1e293b; padding: 15px; border-radius: 6px; margin: 20px 0; border-left: 4px solid #ef4444;">
           <p style="margin: 0;"><strong>Instrument ID:</strong> ${gaugeId}</p>
           <p style="margin: 5px 0 0 0;"><strong>Instrument Name:</strong> ${gaugeName}</p>
-          <p style="margin: 5px 0 0 0; color: #ef4444;"><strong>Days Overdue:</strong> ${daysOverdue} Day(s)</p>
+          ${daysOverdue > 0 ? `<p style="margin: 5px 0 0 0; color: #ef4444;"><strong>Overdue By:</strong> ${daysOverdue} Day(s)</p>` : ''}
         </div>
-        <p style="font-weight: bold; color: #ef4444;">Please return this gauge to the Quality Store immediately to avoid escalation to your department supervisor.</p>
-        <p>Thank you for your cooperation in maintaining our plant quality compliance standards.</p>
+        <div style="background-color: #7f1d1d; padding: 15px; border-radius: 6px; margin: 20px 0; text-align: center;">
+          <p style="margin: 0; font-size: 16px; font-weight: bold; color: #fca5a5;">🚨 Quality department needs this gauge urgently.<br/>Please contact the Quality Supervisor and return the gauge as soon as possible.</p>
+        </div>
+        <p>Failure to return this instrument promptly may result in production delays and escalation to your department supervisor.</p>
+        <p style="color: #94a3b8;">Thank you for your immediate cooperation.</p>
+        <p style="color: #64748b; font-size: 12px; text-align: center;">— GLMS Quality Department Notification System</p>
       </div>
     `;
     return emailService.sendEmail(toEmail, subject, html);

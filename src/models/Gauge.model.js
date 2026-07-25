@@ -45,7 +45,17 @@ const gaugeSchema = new mongoose.Schema({
   nextCalibrationDue: { type: Date, index: true },
   calibrationStatus: { type: String, enum: ['Valid', 'Due Soon', 'Overdue', 'Under Calibration', 'N/A'], default: 'Valid' },
 
-  isDeleted: { type: Boolean, default: false }
+  isDeleted: { type: Boolean, default: false },
+
+  documents: [{
+    name: String,
+    type: String,
+    mimeType: String,
+    data: String,       // base64
+    uploadedAt: Date,
+    uploadedBy: String,
+    size: Number,
+  }]
 }, { timestamps: true });
 
 gaugeSchema.index({ gaugeId: 'text', name: 'text', serialNumber: 'text', partNumber: 'text' });
